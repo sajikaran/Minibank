@@ -1,0 +1,1 @@
+ initial_balance:4000 initial_balance:3000 initial_balance:3000 initial_balance:7000 initial_balance:2000
