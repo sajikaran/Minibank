@@ -1,141 +1,86 @@
-# Balance=0
-# def generate_userid():
-#   UserIds=[]
-#   #get alluserid from user.txt and store it in userIds
-#   while True:
-#     userid= f"U{random.randint(1,100)}"
-
-#     if userid not in UserIds:
-#         return userid
-
-###########################cereate the account to customers########################
+Customers_data={}
 Balance=0
-def Customer_Create():
-      global Balance
-      first_Name=input('enter Your first name:-')
-      last_Name=input('enter the your last name:-')
-      Address=input('enter your Address:-')
-      Password=int(input('enter your password:-'))
-      Initial_Balance=int(input('enetr the  amount:-'))
-      Balance+=Initial_Balance
-  ####################################save the customers deatils on File##########################  
-   
-      with open('userspersonal','a')as users_personal:
-          users_personal.write(f',{first_Name},{last_Name},{Address}\n')
 
-      with open('userssecure.txt','a')as Users_secure:
-          Users_secure.write(f' ,{Password},{Balance}\n')
-     
-      with open('save the Balance.txt','a')as balancefile:
-            balancefile.write(f' initial_balance:{Balance}')
-      print(f" Helloo {first_Name} sucessfully created your account  ") 
-      Customer_Option()
-     
-
-##########################################Deposite#########################################
-def Deposite():
-  global Balance
-  while True:
-      
-      password=int(input('enter the your Password number'))
-      if password==Customer_Create
-        try:
-            amount=int(input('enter the amount') )      
-            if amount>0:
-                  Balance+=amount
-                  print(f'sucessfully deposited :{amount}')
-                  break
-            else:
-                    print(f"invalid deposite try again")
-                    
-        except ValueError:
-                  print('enter the number only')     
-        else:
-          print(f"check your id number")
-          
-        with open('save the balance.txt','a')as balancefile:
-              balancefile.write(f"{Balance},deposited:-{amount}")    
-        return Balance
-
-
-
-
-# #########################withdrawal########################################### 
-# def Withdraw():  
-#    global balance
-#    while True:
-#       newuser_id=generate_userid()
-#       usersid=input('enter the yourid')
-#       if newuser_id==usersid:
-#         try:
-#             cash=int(input('enter the cash') )      
-#             if cash>0:
-#                   Balance+=cash
-#                   print(f'sucessfully withdrawal:{cash}')
-#                   break
-#             else:
-#                     print(f" cheack the Balance ")
-                    
-#         except ValueError:
-#                   print('enter the number only')     
-#         else:
-#           print(f"check your id number")
-          
-#         with open('save the balance.txt','a')as balancefile:
-#                 balancefile.write(f"{newuser_id},{Balance}withdrawal amount:-{cash}") 
-
-
-# ###########################################################################################################333333
-# ################################################################################################################
-#choose the option for admin#
-def Choose_Admin():
-        while True:
-            print(f'\n====choose the option=====\n')
-            print('1.Create the account')
-            print('2.tarnscations history')
+def Front_Menu():
+    while True:
+            print(f'\n====== Welcome to our Banking Platform=====\n')
+            print('1.Admin signup')
+            print('2.Customer signin')
             print('3.Exit')
 
             try:
-                choice=int(input('enter the user choice 1 to 3 '))
+                choose=int(input("enter your options:-"))
+
+                if choose==1:
+                     Admin_Signin()
+                elif choose==2:
+                    Customers_Signin()
+                elif choose==3:
+                    print('Thanks for using our bank')
+                    break
+                else:
+                    print('invalid number enter the number 1 to 3')
+            except ValueError:
+                  print('only enter the numbers 1 to 3')
+
+def Admin_Signin():
+    User_Name='Kanna'
+    User_Id=3102
+    while True:
+        name=input('enter the name:-')
+        user_id=int(input('enter your id:-'))
+        if name==User_Name and user_id==User_Id:
+            print("sucessfully created ")
+            Admin_Choose()
+            break
+        else:
+         print('please  Nead to check your ID,Name')
+
+def Admin_Choose():
+        while True:
+            print(f'\n====choose the options=====\n')
+            print('1.Create the account')
+            print('2.Exit')
+
+            try:
+                choice=int(input('enter the user choice 1 0r 2:-'))
             
                 if choice==1:
-                    Customer_Create()
-                # elif choice==2:
-                #     Transactions_History()
-                elif choice==3:
+                    Customers_personal()
+                elif choice==2:
                     print("Thanks For Using  our bank")  
                     break
                 else:
                     print('invalid number enter number 1 to 3')
             except ValueError:
                         print("enter the numbers only")
-def Admin_Login():
-    Username='Kanna'
-    Userid=3102
-    while True:
-        name=input('enter the name:-')
-        user_id=int(input('enter your id:-'))
-        if name==Username and user_id==Userid:
-            print("sucessfully created ")
-            Choose_Admin()
-            break
-        else:
-         print('please check your ID,Name')
-      
+
+def Customers_Signin():
+    global Customers_data
+
+    userid = input('Enter your personal ID:-')
+    password = input('Enter your password:-')
+
+    if userid in Customers_data and password == Customers_data[userid]['password']:
+        print('You are already our customer.')
+        Customer_Option()
+    else:
+        print('Account not found. You need to create an account first.')
+        Customer_Create()
 
 
+##############################Customers Choosing a Options########################################
 
-#########choose the option for customer##########################################
 def Customer_Option():
     while True:
-        print(f'\n===choose Your  option===\n')
+        print(f'\n===choose Your  options===\n')
         print('1.Deposite Money')
         print('2.withdrawal')
         print('3.check the Balance')
         print('4.Exit')
 
         try:
-            choose=int(input('enetr the option 1 to 3:-'))
+            choose=int(input('enter  the options 1 to 4:-'))
 
             if choose==1:
                 Deposite()
@@ -150,41 +95,98 @@ def Customer_Option():
                 print('Invalid number enter the number 1 to 4:-')
                 
         except ValueError:
-            print("only enter the numbers only ")
+            print( 'Only  Enter The Numbers')
 
-# ###########################Signup For Signup###########################
+#########################Create the accounts For customers ########################
+def Customer_Create():
+    global Balance
+    global Customers_data
 
-# def Customers_Signup():
-#     # userid=input('enter the  your id')
-#     # User_id=generate_userid()
-#     if userid==User_id:
-#         print('choose your options')
-#         Customer_Option()
-#     else:
-#         print('Not Found your account firstly create the account')
-#         Customer_Create()
-# ###########################Banking Menu####################################################################
-# def Front_Menu():
-#     while True:
-#             print(f'\n====== Welcome=====\n')
-#             print('1.Admin signup')
-#             print('2.Customer signup')
-#             print('3.Exit')
 
-#             try:
-#                 choose=int(input("enter your options:-"))
+    first_Name=input('enter Your first name:-')
+    last_Name=input('enter the your last name:-')
+    Address=input('enter your Address:-')
+    Password=input('enter your password:-')
+    NIC_Number=input('enter the NIC number:- ')
+    Initial_Amount=float(input( 'Enter the amount for the Savings:-'))
+    Balance+=Initial_Amount
+    User_Id=(f'{int(NIC_Number)+6758}'.zfill(9))
+    print(f'Sucessfully created your account This is Your Personal Id {User_Id}')
+      
 
-#                 if choose==1:
-#                      Admin_Login()
-#                 elif choose==2:
-#                     Customers_Signup()
-#                 elif choose==3:
-#                     print('Thanks for using our bank')
-#                     break
-#                 else:
-#                     print('invalid number enter the number 1 to 3')
-#             except ValueError:
-#                   print('only enter the numbers 1 to 3')
-# Front_Menu()
+    return   {User_Id:{
+        'first_name': first_Name,
+        'last_name': last_Name,
+        'address': Address,
+        'password': Password,
+        'Balance': Balance}}
+        
 
-Customer_Create()
+def Customers_personal():
+    global Customers_data
+    Customers_details = Customer_Create()
+    Customers_data.update(Customers_details)
+    with open('customers.txt', 'a') as customers_file:
+        customers_file.write(f"{Customers_data}")
+        
+
+    # with open('transactions.txt', 'a') as transactions_file:                      ####################################(i couldn't save the File in
+    # transactions_file.write(f"U {Customers_data[5]}\n, Current_Amount:- {Customers_data[4]}\n"############################# Dictionaries keys and values##                                                                          
+    
+######################################Deposite########################################          
+def Deposite(): 
+    global Balance
+    
+    try:
+        amount=float(input('enter your amount:-') )      
+        if amount>0:
+            Balance+=amount
+            print(f'sucessfully Deposited Your {amount}...')
+            with open('UsersTranscations.txt','a')as Users_transcations:
+                Users_transcations.write(f"Deposited:- {amount}\n") 
+        elif amount<=0:
+           print('Only Enter the amount grater than 0')
+    
+        else:        
+            print(f" you can deposite the amount grater than 0 ")
+                        
+    except ValueError:
+                    print('enter the number only')     
+
+##########################Withdrawal###########################################
+def Withdraw(): 
+    global Balance
+    
+    try:
+
+        cash=float(input('enter the cash:-') )      
+        if cash<=Balance:
+            Balance-=cash
+
+            print(f'sucessfully withdrawal:{cash}')
+            with open('UsersTranscations.txt','a')as Users_transcations:
+                Users_transcations.write(f" ,withdraw_amount:-{cash}\n") 
+        elif cash<=0:
+            print('cash only grater than 0')
+
+        else:        
+            print(f" Insufficiants amount check your Current Balance ")
+                        
+    except ValueError:
+                    print('enter the number only')     
+
+# #####################Check the Balance############################################                    
+def Check_Balance():
+            global Balance
+
+            print(f' Your Current Balnce:-{Balance}')
+
+            with open('UsersTranscations.txt','a')as Users_transcations:
+                Users_transcations.write(f' Current Balance:-{Balance}\n')
+
+
+# def Transcations_History():
+#     with open('UsersTranscation.txt','r')as Users_transcations:
+#        Money_transer=Users_transcations.readlines().split()
+#        print(Money_transer)     [ i counldn't finish them ]
+
